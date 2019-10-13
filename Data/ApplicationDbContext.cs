@@ -14,6 +14,7 @@ namespace TicketsLC.Data
             : base(options)
         {
         }
+        public DbSet<Ticket> Ticket { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -51,6 +52,11 @@ namespace TicketsLC.Data
             modelBuilder.Entity<IdentityUserRole<string>>(b =>
             {
                 b.ToTable("UserRoles");
+            });
+
+            modelBuilder.Entity<Ticket>(b =>
+            {
+                b.ToTable("Tickets");
             });
         }
        
