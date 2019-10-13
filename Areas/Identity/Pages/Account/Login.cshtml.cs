@@ -36,15 +36,15 @@ namespace TicketsLC.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage ="O campo {0} deve ser preenchido")]
+            [EmailAddress(ErrorMessage = "Favor informar um email válido")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "O campo {0} deve ser preenchido")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Lembrar-me?")]
             public bool RememberMe { get; set; }
         }
 
@@ -90,7 +90,7 @@ namespace TicketsLC.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Tentativa de login inválida.");
                     return Page();
                 }
             }
