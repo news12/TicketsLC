@@ -53,6 +53,6 @@ namespace TicketsLC.Data
                 b.ToTable("UserRoles");
             });
         }
-        public DbSet<TicketsLC.Models.Tickets> Tickets { get; set; }
+       
     }
 }

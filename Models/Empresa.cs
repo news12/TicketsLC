@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TicketsLC.Models
 {
-    public class Empresas
+    public class Empresa
     {
     }
 }
