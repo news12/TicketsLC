@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using TicketsLC.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TicketsLC.Services;
 
 namespace TicketsLC
 {
@@ -44,6 +45,9 @@ namespace TicketsLC
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddScoped<TicketService>();
+            services.AddScoped<CategoriaService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +77,7 @@ namespace TicketsLC
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

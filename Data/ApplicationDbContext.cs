@@ -15,6 +15,7 @@ namespace TicketsLC.Data
         {
         }
         public DbSet<Ticket> Ticket { get; set; }
+        public DbSet<Categoria> Categoria { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
