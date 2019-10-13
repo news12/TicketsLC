@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TicketsLC.Models;
 
 namespace TicketsLC.Data
 {
@@ -52,5 +53,6 @@ namespace TicketsLC.Data
                 b.ToTable("UserRoles");
             });
         }
+        public DbSet<TicketsLC.Models.Tickets> Tickets { get; set; }
     }
 }
