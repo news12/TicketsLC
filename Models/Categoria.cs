@@ -11,20 +11,22 @@ namespace TicketsLC.Models
         public int Nome { get; set; }
         public int Descricao { get; set; }
         public DateTime Data{ get; set; }
-        public Tipo IdTipo { get; set; }
+        public int IdTipo { get; set; }
+        public Tipo Tipo { get; set; }
 
         public Categoria()
         {
 
         }
 
-        public Categoria(int id, int nome, int descricao, DateTime data, Tipo idTipo)
+        public Categoria(int id, int nome, int descricao, DateTime data, int idTipo, Tipo tipo)
         {
             Id = id;
             Nome = nome;
             Descricao = descricao;
             Data = data;
             IdTipo = idTipo;
+            Tipo = tipo;
         }
     }
 }
