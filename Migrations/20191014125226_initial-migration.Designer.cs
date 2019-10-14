@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TicketsLC.Data;
 
-namespace TicketsLC.Data.Migrations
+namespace TicketsLC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191013203207_Add-Tickets")]
-    partial class AddTickets
+    [Migration("20191014125226_initial-migration")]
+    partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -180,6 +180,28 @@ namespace TicketsLC.Data.Migrations
                     b.ToTable("UserTokens");
                 });
 
+            modelBuilder.Entity("TicketsLC.Models.Categoria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Data");
+
+                    b.Property<int>("Descricao");
+
+                    b.Property<int>("IdTipo");
+
+                    b.Property<int>("Nome");
+
+                    b.Property<int?>("TipoId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TipoId");
+
+                    b.ToTable("Categoria");
+                });
+
             modelBuilder.Entity("TicketsLC.Models.Ticket", b =>
                 {
                     b.Property<int>("Id")
@@ -202,6 +224,20 @@ namespace TicketsLC.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tickets");
+                });
+
+            modelBuilder.Entity("TicketsLC.Models.Tipo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tipos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -247,6 +283,13 @@ namespace TicketsLC.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TicketsLC.Models.Categoria", b =>
+                {
+                    b.HasOne("TicketsLC.Models.Tipo", "Tipo")
+                        .WithMany()
+                        .HasForeignKey("TipoId");
                 });
 #pragma warning restore 612, 618
         }
