@@ -14,7 +14,7 @@ namespace TicketsLC.Data
         {
             builder.ToTable("Tipos");
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Nome);
+            builder.Property(x => x.Nome).IsRequired().HasMaxLength(100);
              
         }
     }
