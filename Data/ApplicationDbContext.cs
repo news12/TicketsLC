@@ -19,6 +19,7 @@ namespace TicketsLC.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new TipoMap());
 
             modelBuilder.Entity<IdentityUser>(b =>
             {
