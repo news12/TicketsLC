@@ -12,7 +12,9 @@ namespace TicketsLC.Controllers
         private readonly TicketService _ticketService;
         public IActionResult Index()
         {
-            return View();
+            var Tickets = _ticketService.FindAll();
+            return View(Tickets);
         }
+
     }
 }

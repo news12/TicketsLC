@@ -12,10 +12,13 @@ namespace TicketsLC.Data
     {
         public void Configure(EntityTypeBuilder<Tipo> builder)
         {
-            builder.ToTable("Tipos");
+            builder.ToTable("Tipo");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Nome).IsRequired().HasMaxLength(100);
-             
+            builder.HasOne<Categoria>(c => c.Categoria)
+            .WithMany(t => t.Tipos)
+            .HasForeignKey(f => f.CategoriaId);
+
         }
     }
 

@@ -8,25 +8,23 @@ namespace TicketsLC.Models
     public class Categoria
     {
         public int Id { get; set; }
-        public int Nome { get; set; }
-        public int Descricao { get; set; }
-        public DateTime Data{ get; set; }
-        public int IdTipo { get; set; }
-        public Tipo Tipo { get; set; }
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
+        public DateTime Data { get; set; }
+        public ICollection<Tipo> Tipos { get; set; }
 
         public Categoria()
         {
 
         }
 
-        public Categoria(int id, int nome, int descricao, DateTime data, int idTipo, Tipo tipo)
+        public Categoria(int id, string nome, string descricao, DateTime data, ICollection<Tipo> tipos)
         {
             Id = id;
             Nome = nome;
             Descricao = descricao;
             Data = data;
-            IdTipo = idTipo;
-            Tipo = tipo;
+            Tipos = tipos;
         }
     }
 }

@@ -24,7 +24,6 @@ namespace TicketsLC.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new TipoMap());
             modelBuilder.ApplyConfiguration(new IdentityUserMap());
             modelBuilder.ApplyConfiguration(new IdentityUserClaimMap());
             modelBuilder.ApplyConfiguration(new IdentityUserLoginMap());
@@ -33,6 +32,8 @@ namespace TicketsLC.Data
             modelBuilder.ApplyConfiguration(new IdentityRoleClaimMap());
             modelBuilder.ApplyConfiguration(new IdentityUserRoleMap());
             modelBuilder.ApplyConfiguration(new TicketMap());
+            modelBuilder.ApplyConfiguration(new TipoMap());
+            modelBuilder.ApplyConfiguration(new CategoriaMap());
 
         }
 

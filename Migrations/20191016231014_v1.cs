@@ -4,10 +4,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TicketsLC.Migrations
 {
-    public partial class initialmigration : Migration
+    public partial class v1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Categoria",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<int>(nullable: false),
+                    Descricao = table.Column<int>(nullable: false),
+                    Data = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categoria", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
@@ -40,19 +55,6 @@ namespace TicketsLC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tipos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(maxLength: 100, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tipos", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -70,11 +72,36 @@ namespace TicketsLC.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    Nome = table.Column<string>(nullable: true),
+                    Sobrenome = table.Column<string>(nullable: true),
+                    Empresa = table.Column<string>(nullable: true),
+                    Tipo = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tipos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(maxLength: 100, nullable: false),
+                    CategoriaId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tipos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tipos_Categoria_CategoriaId",
+                        column: x => x.CategoriaId,
+                        principalTable: "Categoria",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,29 +123,6 @@ namespace TicketsLC.Migrations
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Categoria",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<int>(nullable: false),
-                    Descricao = table.Column<int>(nullable: false),
-                    Data = table.Column<DateTime>(nullable: false),
-                    IdTipo = table.Column<int>(nullable: false),
-                    TipoId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categoria", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Categoria_Tipos_TipoId",
-                        column: x => x.TipoId,
-                        principalTable: "Tipos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -207,11 +211,6 @@ namespace TicketsLC.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categoria_TipoId",
-                table: "Categoria",
-                column: "TipoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
                 table: "RoleClaims",
                 column: "RoleId");
@@ -221,6 +220,11 @@ namespace TicketsLC.Migrations
                 table: "Roles",
                 column: "NormalizedName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tipos_CategoriaId",
+                table: "Tipos",
+                column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserClaims_UserId",
@@ -252,13 +256,13 @@ namespace TicketsLC.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Categoria");
-
-            migrationBuilder.DropTable(
                 name: "RoleClaims");
 
             migrationBuilder.DropTable(
                 name: "Tickets");
+
+            migrationBuilder.DropTable(
+                name: "Tipos");
 
             migrationBuilder.DropTable(
                 name: "UserClaims");
@@ -273,7 +277,7 @@ namespace TicketsLC.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
-                name: "Tipos");
+                name: "Categoria");
 
             migrationBuilder.DropTable(
                 name: "Roles");

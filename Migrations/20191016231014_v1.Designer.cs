@@ -9,8 +9,8 @@ using TicketsLC.Data;
 namespace TicketsLC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191014125226_initial-migration")]
-    partial class initialmigration
+    [Migration("20191016231014_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,6 +71,9 @@ namespace TicketsLC.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -109,6 +112,8 @@ namespace TicketsLC.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("Users");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -189,15 +194,9 @@ namespace TicketsLC.Migrations
 
                     b.Property<int>("Descricao");
 
-                    b.Property<int>("IdTipo");
-
                     b.Property<int>("Nome");
 
-                    b.Property<int?>("TipoId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TipoId");
 
                     b.ToTable("Categoria");
                 });
@@ -231,13 +230,32 @@ namespace TicketsLC.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("CategoriaId");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoriaId");
+
                     b.ToTable("Tipos");
+                });
+
+            modelBuilder.Entity("TicketsLC.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("Empresa");
+
+                    b.Property<string>("Nome");
+
+                    b.Property<string>("Sobrenome");
+
+                    b.Property<int>("Tipo");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -285,11 +303,11 @@ namespace TicketsLC.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TicketsLC.Models.Categoria", b =>
+            modelBuilder.Entity("TicketsLC.Models.Tipo", b =>
                 {
-                    b.HasOne("TicketsLC.Models.Tipo", "Tipo")
-                        .WithMany()
-                        .HasForeignKey("TipoId");
+                    b.HasOne("TicketsLC.Models.Categoria", "Categoria")
+                        .WithMany("Tipos")
+                        .HasForeignKey("CategoriaId");
                 });
 #pragma warning restore 612, 618
         }

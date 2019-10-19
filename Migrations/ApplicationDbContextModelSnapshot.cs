@@ -192,15 +192,9 @@ namespace TicketsLC.Migrations
 
                     b.Property<int>("Descricao");
 
-                    b.Property<int>("IdTipo");
-
                     b.Property<int>("Nome");
 
-                    b.Property<int?>("TipoId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TipoId");
 
                     b.ToTable("Categoria");
                 });
@@ -234,11 +228,15 @@ namespace TicketsLC.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("CategoriaId");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoriaId");
 
                     b.ToTable("Tipos");
                 });
@@ -303,11 +301,11 @@ namespace TicketsLC.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TicketsLC.Models.Categoria", b =>
+            modelBuilder.Entity("TicketsLC.Models.Tipo", b =>
                 {
-                    b.HasOne("TicketsLC.Models.Tipo", "Tipo")
-                        .WithMany()
-                        .HasForeignKey("TipoId");
+                    b.HasOne("TicketsLC.Models.Categoria", "Categoria")
+                        .WithMany("Tipos")
+                        .HasForeignKey("CategoriaId");
                 });
 #pragma warning restore 612, 618
         }
