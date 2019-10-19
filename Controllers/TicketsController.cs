@@ -10,6 +10,11 @@ namespace TicketsLC.Controllers
     public class TicketsController : Controller
     {
         private readonly TicketService _ticketService;
+
+        public TicketsController(TicketService ticketService)
+        {
+            _ticketService = ticketService;
+        }
         public IActionResult Index()
         {
             var Tickets = _ticketService.FindAll();

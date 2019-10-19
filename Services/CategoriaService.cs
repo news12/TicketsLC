@@ -19,5 +19,11 @@ namespace TicketsLC.Services
         {
             return _context.Categoria.OrderBy(b => b.Nome).ToList();
         }
+        public Categoria BuscarPorId(int id)
+        {
+            return _context.Categoria.Find(id);
+        }
+
+
     }
 }
